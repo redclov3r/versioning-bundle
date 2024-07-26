@@ -27,11 +27,11 @@ abstract class AbstractFileWriter implements WriterInterface
     protected function writeFileContents(string $contents): void
     {
         if (is_file($this->file) && !is_writable($this->file)) {
-            throw new StorageException(sprintf('File "%s" is not writable.', $this->file), $this->file);
+            throw new StorageException(\sprintf('File "%s" is not writable.', $this->file), $this->file);
         }
 
         if (false === @file_put_contents($this->file, $contents)) {
-            throw new StorageException(sprintf('Failed to write to file "%s".', $this->file), $this->file);
+            throw new StorageException(\sprintf('Failed to write to file "%s".', $this->file), $this->file);
         }
     }
 }

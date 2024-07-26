@@ -19,6 +19,6 @@ final class YamlFileWriter extends AbstractFileWriter
             ],
         ]);
 
-        $this->writeFileContents(sprintf("# %s\n%s", self::COMMENT, $yaml));
+        $this->writeFileContents(\sprintf("# %s\n%s", self::COMMENT, $yaml));
     }
 }

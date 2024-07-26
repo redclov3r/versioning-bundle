@@ -49,7 +49,7 @@ parameters:
 
 YAML;
 
-        $this->assertStringEqualsFile($this->file, sprintf($yaml, WriterInterface::COMMENT, $prefix));
+        $this->assertStringEqualsFile($this->file, \sprintf($yaml, WriterInterface::COMMENT, $prefix));
     }
 
     public function prefixes(): iterable

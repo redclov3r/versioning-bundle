@@ -28,7 +28,7 @@ final class YamlFileReaderTest extends TestCase
         $file = __DIR__.'/Fixtures/yaml/valid.yaml';
 
         $this->expectException(InvalidDataException::class);
-        $this->expectExceptionMessage(sprintf('Invalid YAML structure for "%s".', $file));
+        $this->expectExceptionMessage(\sprintf('Invalid YAML structure for "%s".', $file));
 
         (new YamlFileReader($file, 'application'))->read();
     }
@@ -38,7 +38,7 @@ final class YamlFileReaderTest extends TestCase
         $file = __DIR__.'/Fixtures/yaml/invalid-yaml.yaml';
 
         $this->expectException(InvalidDataException::class);
-        $this->expectExceptionMessage(sprintf('Invalid YAML in file "%s":', $file));
+        $this->expectExceptionMessage(\sprintf('Invalid YAML in file "%s":', $file));
 
         (new YamlFileReader($file, 'application'))->read();
     }
@@ -48,7 +48,7 @@ final class YamlFileReaderTest extends TestCase
         $file = __DIR__.'/Fixtures/yaml/invalid-not-array.yaml';
 
         $this->expectException(InvalidDataException::class);
-        $this->expectExceptionMessage(sprintf('YAML content was expected to decode to an array, "string" returned for "%s".', $file));
+        $this->expectExceptionMessage(\sprintf('YAML content was expected to decode to an array, "string" returned for "%s".', $file));
 
         (new YamlFileReader($file, 'application'))->read();
     }
@@ -58,7 +58,7 @@ final class YamlFileReaderTest extends TestCase
         $file = __DIR__.'/Fixtures/yaml/invalid-structure.yaml';
 
         $this->expectException(InvalidDataException::class);
-        $this->expectExceptionMessage(sprintf('Invalid YAML structure for "%s".', $file));
+        $this->expectExceptionMessage(\sprintf('Invalid YAML structure for "%s".', $file));
 
         (new YamlFileReader($file, 'application'))->read();
     }
@@ -68,7 +68,7 @@ final class YamlFileReaderTest extends TestCase
         $file = __DIR__.'/Fixtures/yaml/invalid-date.yaml';
 
         $this->expectException(InvalidDataException::class);
-        $this->expectExceptionMessage(sprintf('Invalid release date in file "%s": ', $file));
+        $this->expectExceptionMessage(\sprintf('Invalid release date in file "%s": ', $file));
 
         (new YamlFileReader($file, 'application'))->read();
     }

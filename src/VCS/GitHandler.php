@@ -58,34 +58,34 @@ final class GitHandler implements VCSHandlerInterface
 
         if (null !== $vcsName) {
             $this->baseCommand[] = '-c';
-            $this->baseCommand[] = sprintf('user.name="%s"', $vcsName);
+            $this->baseCommand[] = \sprintf('user.name="%s"', $vcsName);
         }
         if (null !== $vcsEmail) {
             $this->baseCommand[] = '-c';
-            $this->baseCommand[] = sprintf('user.email="%s"', $vcsEmail);
+            $this->baseCommand[] = \sprintf('user.email="%s"', $vcsEmail);
         }
     }
 
     public function commit(StyleInterface $io, Version $version): void
     {
         try {
-            $io->text(sprintf('Staging the file "%s".', $this->file));
+            $io->text(\sprintf('Staging the file "%s".', $this->file));
             $this->executeCommand($io, ['add', $this->file]);
         } catch (ProcessFailedException $e) {
-            throw new VCSException(sprintf('Failed to stage the file "%s".', $this->file), $e);
+            throw new VCSException(\sprintf('Failed to stage the file "%s".', $this->file), $e);
         }
 
         try {
-            $io->text(sprintf('Checking if the file "%s" has any changes to commit.', $this->file));
+            $io->text(\sprintf('Checking if the file "%s" has any changes to commit.', $this->file));
             $this->executeCommand($io, ['diff', '--cached', '--exit-code', '--quiet', $this->file]);
 
-            throw new VCSException(sprintf('There are no changes to the file "%s".', $this->file));
+            throw new VCSException(\sprintf('There are no changes to the file "%s".', $this->file));
         } catch (ProcessFailedException $e) {
             try {
-                $io->text(sprintf('Committing the file "%s".', $this->file));
-                $this->executeCommand($io, ['commit', '-m', sprintf($this->commitMessage, $version), $this->file]);
+                $io->text(\sprintf('Committing the file "%s".', $this->file));
+                $this->executeCommand($io, ['commit', '-m', \sprintf($this->commitMessage, $version), $this->file]);
             } catch (ProcessFailedException $e) {
-                throw new VCSException(sprintf('Failed to commit the file "%s".', $this->file), $e);
+                throw new VCSException(\sprintf('Failed to commit the file "%s".', $this->file), $e);
             }
         }
     }
@@ -95,16 +95,16 @@ final class GitHandler implements VCSHandlerInterface
         $tag = 'v'.$version;
 
         try {
-            $io->text(sprintf('Checking if the tag "%s" already exists.', $tag));
-            $this->executeCommand($io, ['rev-parse', '--quiet', '--verify', sprintf('refs/tags/%s', $tag)]);
+            $io->text(\sprintf('Checking if the tag "%s" already exists.', $tag));
+            $this->executeCommand($io, ['rev-parse', '--quiet', '--verify', \sprintf('refs/tags/%s', $tag)]);
 
-            throw new VCSException(sprintf('Cannot create the tag "%s" as it already exists.', $tag));
+            throw new VCSException(\sprintf('Cannot create the tag "%s" as it already exists.', $tag));
         } catch (ProcessFailedException $e) {
             try {
-                $io->text(sprintf('Creating a new tag "%s".', $tag));
-                $this->executeCommand($io, ['tag', '-a', $tag, '-m', sprintf($this->tagMessage, $version)]);
+                $io->text(\sprintf('Creating a new tag "%s".', $tag));
+                $this->executeCommand($io, ['tag', '-a', $tag, '-m', \sprintf($this->tagMessage, $version)]);
             } catch (ProcessFailedException $e) {
-                throw new VCSException(sprintf('Failed to create the tag "%s".', $tag), $e);
+                throw new VCSException(\sprintf('Failed to create the tag "%s".', $tag), $e);
             }
         }
     }

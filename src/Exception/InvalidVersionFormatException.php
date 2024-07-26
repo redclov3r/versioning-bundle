@@ -17,7 +17,7 @@ class InvalidVersionFormatException extends \InvalidArgumentException
     {
         $this->version = $version;
 
-        parent::__construct(sprintf('Invalid version format "%s".', $version), 0, $previous);
+        parent::__construct(\sprintf('Invalid version format "%s".', $version), 0, $previous);
     }
 
     public function getVersion(): Version

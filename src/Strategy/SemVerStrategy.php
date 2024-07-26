@@ -25,7 +25,7 @@ final class SemVerStrategy implements StrategyInterface
     public function __construct(string $defaultType)
     {
         if (!isset(self::INITIAL_VALUES[$defaultType])) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new \InvalidArgumentException(\sprintf(
                 'Invalid value "%s" given, expected one of: "%s".',
                 $defaultType,
                 implode('", "', array_keys(self::INITIAL_VALUES))

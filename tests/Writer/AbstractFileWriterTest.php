@@ -59,7 +59,7 @@ final class AbstractFileWriterTest extends TestCase
         };
 
         $this->expectException(StorageException::class);
-        $this->expectExceptionMessage(sprintf('File "%s" is not writable.', $this->file));
+        $this->expectExceptionMessage(\sprintf('File "%s" is not writable.', $this->file));
 
         $writer->write(new Version('1', new \DateTimeImmutable()));
     }

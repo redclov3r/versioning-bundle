@@ -42,7 +42,7 @@ final class AbstractFileReaderTest extends TestCase
         };
 
         $this->expectException(StorageException::class);
-        $this->expectExceptionMessage(sprintf('Path "%s" does not exist or is not a file.', $file));
+        $this->expectExceptionMessage(\sprintf('Path "%s" does not exist or is not a file.', $file));
 
         $reader->read();
     }
@@ -65,7 +65,7 @@ final class AbstractFileReaderTest extends TestCase
             };
 
             $this->expectException(StorageException::class);
-            $this->expectExceptionMessage(sprintf('File "%s" is not readable.', $file));
+            $this->expectExceptionMessage(\sprintf('File "%s" is not readable.', $file));
 
             $reader->read();
         } finally {

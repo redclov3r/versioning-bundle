@@ -28,7 +28,7 @@ final class XmlFileReaderTest extends TestCase
         $file = __DIR__.'/Fixtures/xml/valid.xml';
 
         $this->expectException(InvalidDataException::class);
-        $this->expectExceptionMessage(sprintf('Invalid XML structure for "%s".', $file));
+        $this->expectExceptionMessage(\sprintf('Invalid XML structure for "%s".', $file));
 
         (new XmlFileReader($file, 'application'))->read();
     }
@@ -38,7 +38,7 @@ final class XmlFileReaderTest extends TestCase
         $file = __DIR__.'/Fixtures/xml/invalid-xml.xml';
 
         $this->expectException(InvalidDataException::class);
-        $this->expectExceptionMessage(sprintf('Invalid XML in file "%s":', $file));
+        $this->expectExceptionMessage(\sprintf('Invalid XML in file "%s":', $file));
 
         (new XmlFileReader($file, 'application'))->read();
     }
@@ -48,7 +48,7 @@ final class XmlFileReaderTest extends TestCase
         $file = __DIR__.'/Fixtures/xml/invalid-structure-parameters.xml';
 
         $this->expectException(InvalidDataException::class);
-        $this->expectExceptionMessage(sprintf('Invalid XML structure for "%s", missing "parameters" key.', $file));
+        $this->expectExceptionMessage(\sprintf('Invalid XML structure for "%s", missing "parameters" key.', $file));
 
         (new XmlFileReader($file, 'application'))->read();
     }
@@ -58,7 +58,7 @@ final class XmlFileReaderTest extends TestCase
         $file = __DIR__.'/Fixtures/xml/invalid-not-array.xml';
 
         $this->expectException(InvalidDataException::class);
-        $this->expectExceptionMessage(sprintf('Invalid XML structure for "%s", missing "parameter" keys.', $file));
+        $this->expectExceptionMessage(\sprintf('Invalid XML structure for "%s", missing "parameter" keys.', $file));
 
         (new XmlFileReader($file, 'application'))->read();
     }
@@ -68,7 +68,7 @@ final class XmlFileReaderTest extends TestCase
         $file = __DIR__.'/Fixtures/xml/invalid-structure.xml';
 
         $this->expectException(InvalidDataException::class);
-        $this->expectExceptionMessage(sprintf('Invalid XML structure for "%s".', $file));
+        $this->expectExceptionMessage(\sprintf('Invalid XML structure for "%s".', $file));
 
         (new XmlFileReader($file, 'application'))->read();
     }
@@ -78,7 +78,7 @@ final class XmlFileReaderTest extends TestCase
         $file = __DIR__.'/Fixtures/xml/invalid-date.xml';
 
         $this->expectException(InvalidDataException::class);
-        $this->expectExceptionMessage(sprintf('Invalid release date in file "%s": ', $file));
+        $this->expectExceptionMessage(\sprintf('Invalid release date in file "%s": ', $file));
 
         (new XmlFileReader($file, 'application'))->read();
     }

@@ -80,7 +80,7 @@ final class BizkitVersioningExtension extends ConfigurableExtension implements C
         $loader = $loaderResolver->resolve($file, $format);
 
         if (false === $loader) {
-            throw new InvalidArgumentException(sprintf('Invalid version file format "%s" provided.', $format));
+            throw new InvalidArgumentException(\sprintf('Invalid version file format "%s" provided.', $format));
         }
 
         $loader->import($file, null, 'not_found');
@@ -121,7 +121,7 @@ final class BizkitVersioningExtension extends ConfigurableExtension implements C
             }
         }
 
-        throw new InvalidArgumentException(sprintf(
+        throw new InvalidArgumentException(\sprintf(
             'Unknown configuration value "%s", there is no service with the tag "%s" and attribute "%s" with that value registered.',
             $configuredValue,
             $tag,

@@ -82,7 +82,7 @@ final class IncrementCommand extends Command
 
         $confirmationQuestion = null === $version
             ? 'Your application doesn\'t have a version set, do you wish to initialize it?'
-            : sprintf('Your current application version is "%s", do you wish to increment it?', $version);
+            : \sprintf('Your current application version is "%s", do you wish to increment it?', $version);
 
         if (!$io->confirm($confirmationQuestion, true)) {
             return 0;
@@ -91,7 +91,7 @@ final class IncrementCommand extends Command
         try {
             $newVersion = ($this->strategy)($io, $version);
         } catch (InvalidVersionFormatException $e) {
-            $io->error(sprintf('Failed incrementing to a new version: %s', $e->getMessage()));
+            $io->error(\sprintf('Failed incrementing to a new version: %s', $e->getMessage()));
 
             return 1;
         }
@@ -99,12 +99,12 @@ final class IncrementCommand extends Command
         try {
             $this->writer->write($newVersion);
         } catch (StorageException $e) {
-            $io->error(sprintf('Failed storing new version "%s": %s', $newVersion, $e->getMessage()));
+            $io->error(\sprintf('Failed storing new version "%s": %s', $newVersion, $e->getMessage()));
 
             return 1;
         }
 
-        $io->success(sprintf(
+        $io->success(\sprintf(
             'Your application version has been %s to "%s".',
             null === $version ? 'initialized' : 'incremented',
             $newVersion
@@ -130,9 +130,9 @@ final class IncrementCommand extends Command
         $this->vcsHandler->commit($io, $version);
         $io->success('Your application version file has successfully been committed to your VCS.');
 
-        if ($io->confirm(sprintf('Do you wish to create a tag with the version "%s"?', $version), true)) {
+        if ($io->confirm(\sprintf('Do you wish to create a tag with the version "%s"?', $version), true)) {
             $this->vcsHandler->tag($io, $version);
-            $io->success(sprintf('Your application has successfully been tagged with the version "%s".', $version));
+            $io->success(\sprintf('Your application has successfully been tagged with the version "%s".', $version));
         }
     }
 }

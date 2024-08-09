@@ -54,16 +54,16 @@ final class IncrementCommandTest extends TestCase
         $statusCode = $commandTester->execute([]);
         $display = $commandTester->getDisplay();
 
-        $this->assertSame(0, $statusCode);
-        $this->assertStringContainsString('Your current application version is "1", do you wish to increment it?', $display);
-        $this->assertStringContainsString('Your application version has been incremented to "2".', $display);
-        $this->assertFileExists($this->validFile);
+        self::assertSame(0, $statusCode);
+        self::assertStringContainsString('Your current application version is "1", do you wish to increment it?', $display);
+        self::assertStringContainsString('Your application version has been incremented to "2".', $display);
+        self::assertFileExists($this->validFile);
 
         $yaml = Yaml::parseFile($this->validFile);
-        $this->assertArrayHasKey('parameters', $yaml);
-        $this->assertArrayHasKey('app.version', $yaml['parameters']);
+        self::assertArrayHasKey('parameters', $yaml);
+        self::assertArrayHasKey('app.version', $yaml['parameters']);
 
-        $this->assertSame('2', $yaml['parameters']['app.version']);
+        self::assertSame('2', $yaml['parameters']['app.version']);
     }
 
     public function testVersionIsInitialized(): void
@@ -76,16 +76,16 @@ final class IncrementCommandTest extends TestCase
         $statusCode = $commandTester->execute([]);
         $display = $commandTester->getDisplay();
 
-        $this->assertSame(0, $statusCode);
-        $this->assertStringContainsString('Your application doesn\'t have a version set, do you wish to initialize it?', $display);
-        $this->assertStringContainsString('Your application version has been initialized to "1".', $display);
-        $this->assertFileExists($this->validFile);
+        self::assertSame(0, $statusCode);
+        self::assertStringContainsString('Your application doesn\'t have a version set, do you wish to initialize it?', $display);
+        self::assertStringContainsString('Your application version has been initialized to "1".', $display);
+        self::assertFileExists($this->validFile);
 
         $yaml = Yaml::parseFile($this->validFile);
-        $this->assertArrayHasKey('parameters', $yaml);
-        $this->assertArrayHasKey('app.version', $yaml['parameters']);
+        self::assertArrayHasKey('parameters', $yaml);
+        self::assertArrayHasKey('app.version', $yaml['parameters']);
 
-        $this->assertSame('1', $yaml['parameters']['app.version']);
+        self::assertSame('1', $yaml['parameters']['app.version']);
     }
 
     public function testVersionIsNotIncrementedWhenConfirmationIsFalse(): void
@@ -96,15 +96,15 @@ final class IncrementCommandTest extends TestCase
         $statusCode = $commandTester->execute([]);
         $display = $commandTester->getDisplay();
 
-        $this->assertSame(0, $statusCode);
-        $this->assertStringContainsString('Your current application version is "1", do you wish to increment it?', $display);
-        $this->assertFileExists($this->validFile);
+        self::assertSame(0, $statusCode);
+        self::assertStringContainsString('Your current application version is "1", do you wish to increment it?', $display);
+        self::assertFileExists($this->validFile);
 
         $yaml = Yaml::parseFile($this->validFile);
-        $this->assertArrayHasKey('parameters', $yaml);
-        $this->assertArrayHasKey('app.version', $yaml['parameters']);
+        self::assertArrayHasKey('parameters', $yaml);
+        self::assertArrayHasKey('app.version', $yaml['parameters']);
 
-        $this->assertSame('1', $yaml['parameters']['app.version']);
+        self::assertSame('1', $yaml['parameters']['app.version']);
     }
 
     public function testCommandFailsOnInvalidVersionFormat(): void
@@ -115,16 +115,16 @@ final class IncrementCommandTest extends TestCase
         $statusCode = $commandTester->execute([]);
         $display = $commandTester->getDisplay();
 
-        $this->assertSame(1, $statusCode);
-        $this->assertStringContainsString('Your current application version is "1.2", do you wish to increment it?', $display);
-        $this->assertStringContainsString('Failed incrementing to a new version:', $display);
-        $this->assertFileExists($this->invalidFile);
+        self::assertSame(1, $statusCode);
+        self::assertStringContainsString('Your current application version is "1.2", do you wish to increment it?', $display);
+        self::assertStringContainsString('Failed incrementing to a new version:', $display);
+        self::assertFileExists($this->invalidFile);
 
         $yaml = Yaml::parseFile($this->invalidFile);
-        $this->assertArrayHasKey('parameters', $yaml);
-        $this->assertArrayHasKey('app.version', $yaml['parameters']);
+        self::assertArrayHasKey('parameters', $yaml);
+        self::assertArrayHasKey('app.version', $yaml['parameters']);
 
-        $this->assertSame('1.2', $yaml['parameters']['app.version']);
+        self::assertSame('1.2', $yaml['parameters']['app.version']);
     }
 
     public function testCommandFailsWhenNewVersionCannotBeStored(): void
@@ -137,16 +137,16 @@ final class IncrementCommandTest extends TestCase
         $statusCode = $commandTester->execute([]);
         $display = $commandTester->getDisplay();
 
-        $this->assertSame(1, $statusCode);
-        $this->assertStringContainsString('Your current application version is "1", do you wish to increment it?', $display);
-        $this->assertStringContainsString('Failed storing new version "2":', $display);
-        $this->assertFileExists($this->validFile);
+        self::assertSame(1, $statusCode);
+        self::assertStringContainsString('Your current application version is "1", do you wish to increment it?', $display);
+        self::assertStringContainsString('Failed storing new version "2":', $display);
+        self::assertFileExists($this->validFile);
 
         $yaml = Yaml::parseFile($this->validFile);
-        $this->assertArrayHasKey('parameters', $yaml);
-        $this->assertArrayHasKey('app.version', $yaml['parameters']);
+        self::assertArrayHasKey('parameters', $yaml);
+        self::assertArrayHasKey('app.version', $yaml['parameters']);
 
-        $this->assertSame('1', $yaml['parameters']['app.version']);
+        self::assertSame('1', $yaml['parameters']['app.version']);
     }
 
     public function testFileIsCommittedAndTagIsCreatedIfVCSHandlerIsNotNullAndConfirmationIsTrue(): void
@@ -157,12 +157,12 @@ final class IncrementCommandTest extends TestCase
         $statusCode = $commandTester->execute([]);
         $display = $commandTester->getDisplay();
 
-        $this->assertSame(0, $statusCode);
-        $this->assertStringContainsString('Your current application version is "1", do you wish to increment it?', $display);
-        $this->assertStringContainsString('Your application version has been incremented to "2".', $display);
-        $this->assertStringContainsString('Your application version file has successfully been committed to your VCS.', $display);
-        $this->assertStringContainsString('Do you wish to create a tag with the version "2"?', $display);
-        $this->assertStringContainsString('Your application has successfully been tagged with the version "2".', $display);
+        self::assertSame(0, $statusCode);
+        self::assertStringContainsString('Your current application version is "1", do you wish to increment it?', $display);
+        self::assertStringContainsString('Your application version has been incremented to "2".', $display);
+        self::assertStringContainsString('Your application version file has successfully been committed to your VCS.', $display);
+        self::assertStringContainsString('Do you wish to create a tag with the version "2"?', $display);
+        self::assertStringContainsString('Your application has successfully been tagged with the version "2".', $display);
     }
 
     public function testFileIsCommittedAndTagIsNotCreatedIfVCSHandlerIsNotNullAndConfirmationIsFalse(): void
@@ -173,12 +173,12 @@ final class IncrementCommandTest extends TestCase
         $statusCode = $commandTester->execute([]);
         $display = $commandTester->getDisplay();
 
-        $this->assertSame(0, $statusCode);
-        $this->assertStringContainsString('Your current application version is "1", do you wish to increment it?', $display);
-        $this->assertStringContainsString('Your application version has been incremented to "2".', $display);
-        $this->assertStringContainsString('Your application version file has successfully been committed to your VCS.', $display);
-        $this->assertStringContainsString('Do you wish to create a tag with the version "2"?', $display);
-        $this->assertStringNotContainsString('Your application has successfully been tagged with the version "2".', $display);
+        self::assertSame(0, $statusCode);
+        self::assertStringContainsString('Your current application version is "1", do you wish to increment it?', $display);
+        self::assertStringContainsString('Your application version has been incremented to "2".', $display);
+        self::assertStringContainsString('Your application version file has successfully been committed to your VCS.', $display);
+        self::assertStringContainsString('Do you wish to create a tag with the version "2"?', $display);
+        self::assertStringNotContainsString('Your application has successfully been tagged with the version "2".', $display);
     }
 
     public function testVCSHandlerErrorIsSentToOutput(): void
@@ -189,12 +189,12 @@ final class IncrementCommandTest extends TestCase
         $statusCode = $commandTester->execute([]);
         $display = $commandTester->getDisplay();
 
-        $this->assertSame(1, $statusCode);
-        $this->assertStringContainsString('Your current application version is "1", do you wish to increment it?', $display);
-        $this->assertStringContainsString('Your application version has been incremented to "2".', $display);
-        $this->assertStringContainsString('Your application version file has successfully been committed to your VCS.', $display);
-        $this->assertStringContainsString('Do you wish to create a tag with the version "2"?', $display);
-        $this->assertStringContainsString('Cannot create the tag "v2" as it already exists.', $display);
+        self::assertSame(1, $statusCode);
+        self::assertStringContainsString('Your current application version is "1", do you wish to increment it?', $display);
+        self::assertStringContainsString('Your application version has been incremented to "2".', $display);
+        self::assertStringContainsString('Your application version file has successfully been committed to your VCS.', $display);
+        self::assertStringContainsString('Do you wish to create a tag with the version "2"?', $display);
+        self::assertStringContainsString('Cannot create the tag "v2" as it already exists.', $display);
     }
 
     private function createCommandTester(string $file, ?string $pathToVCSExecutable = null): CommandTester

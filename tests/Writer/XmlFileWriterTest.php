@@ -53,10 +53,10 @@ final class XmlFileWriterTest extends TestCase
 
 XML;
 
-        $this->assertStringEqualsFile($this->file, \sprintf($xml, WriterInterface::COMMENT, $prefix));
+        self::assertStringEqualsFile($this->file, \sprintf($xml, WriterInterface::COMMENT, $prefix));
     }
 
-    public function prefixes(): iterable
+    public static function prefixes(): iterable
     {
         yield ['app'];
         yield ['foo'];

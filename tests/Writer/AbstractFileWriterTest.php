@@ -43,7 +43,7 @@ final class AbstractFileWriterTest extends TestCase
 
         $writer->write(new Version($contents, new \DateTimeImmutable()));
 
-        $this->assertStringEqualsFile($this->file, $contents);
+        self::assertStringEqualsFile($this->file, $contents);
     }
 
     public function testExceptionIsThrownIfFileIsNotWritable(): void

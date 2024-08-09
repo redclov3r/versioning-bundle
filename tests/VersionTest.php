@@ -18,16 +18,16 @@ final class VersionTest extends TestCase
 
         $version = new Version($versionNumber, $date);
 
-        $this->assertSame($versionNumber, $version->getVersionNumber());
-        $this->assertSame(md5($versionNumber), $version->getVersionHash());
-        $this->assertSame($date, $version->getReleaseDate());
+        self::assertSame($versionNumber, $version->getVersionNumber());
+        self::assertSame(md5($versionNumber), $version->getVersionHash());
+        self::assertSame($date, $version->getReleaseDate());
     }
 
     public function testDefaultDateIsSet(): void
     {
         $version = new Version('1.2.3');
 
-        $this->assertInstanceOf(\DateTimeInterface::class, $version->getReleaseDate());
+        self::assertInstanceOf(\DateTimeInterface::class, $version->getReleaseDate());
     }
 
     public function testVersionNumberIsReturnedWhenCastToString(): void
@@ -36,6 +36,6 @@ final class VersionTest extends TestCase
 
         $version = new Version($versionNumber);
 
-        $this->assertSame($versionNumber, (string) $version);
+        self::assertSame($versionNumber, (string) $version);
     }
 }

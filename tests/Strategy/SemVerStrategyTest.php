@@ -48,8 +48,8 @@ final class SemVerStrategyTest extends TestCase
 
         $newVersion = ($this->strategy)($this->io, $oldVersion);
 
-        $this->assertSame($incrementedVersion, $newVersion->getVersionNumber());
-        $this->assertNotSame(
+        self::assertSame($incrementedVersion, $newVersion->getVersionNumber());
+        self::assertNotSame(
             $oldVersion->getReleaseDate()->format(\DateTimeInterface::RFC3339),
             $newVersion->getReleaseDate()->format(\DateTimeInterface::RFC3339)
         );
@@ -62,13 +62,13 @@ final class SemVerStrategyTest extends TestCase
     {
         $this->io
             ->method('choice')
-            ->with($this->isType('string'), $this->isType('array'), $type)
+            ->with(self::isType('string'), self::isType('array'), $type)
             ->willReturn($type)
         ;
 
         $newVersion = (new SemVerStrategy($type))($this->io, new Version($version));
 
-        $this->assertSame($incrementedVersion, $newVersion->getVersionNumber());
+        self::assertSame($incrementedVersion, $newVersion->getVersionNumber());
     }
 
     public function testExceptionIsThrownOnInvalidDefaultVersionType(): void
@@ -79,7 +79,7 @@ final class SemVerStrategyTest extends TestCase
         new SemVerStrategy('foo');
     }
 
-    public function validVersionAndIncrementedVersionPairs(): iterable
+    public static function validVersionAndIncrementedVersionPairs(): iterable
     {
         yield ['1.2.3', '2.0.0', 'major'];
         yield ['1.2.3', '1.3.0', 'minor'];
@@ -95,10 +95,10 @@ final class SemVerStrategyTest extends TestCase
 
         $newVersion = ($this->strategy)($this->io);
 
-        $this->assertSame($initialValue, $newVersion->getVersionNumber());
+        self::assertSame($initialValue, $newVersion->getVersionNumber());
     }
 
-    public function initialValues(): iterable
+    public static function initialValues(): iterable
     {
         yield ['1.0.0', 'major'];
         yield ['0.1.0', 'minor'];
@@ -117,7 +117,7 @@ final class SemVerStrategyTest extends TestCase
         ($this->strategy)($this->io, new Version($invalidVersion));
     }
 
-    public function invalidVersions(): iterable
+    public static function invalidVersions(): iterable
     {
         yield ['1', 'major'];
         yield ['0.1', 'minor'];

@@ -49,10 +49,10 @@ parameters:
 
 YAML;
 
-        $this->assertStringEqualsFile($this->file, \sprintf($yaml, WriterInterface::COMMENT, $prefix));
+        self::assertStringEqualsFile($this->file, \sprintf($yaml, WriterInterface::COMMENT, $prefix));
     }
 
-    public function prefixes(): iterable
+    public static function prefixes(): iterable
     {
         yield ['app'];
         yield ['foo'];

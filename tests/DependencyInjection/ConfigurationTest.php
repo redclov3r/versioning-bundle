@@ -17,7 +17,7 @@ final class ConfigurationTest extends TestCase
     {
         $config = (new Processor())->processConfiguration(new Configuration(), ['bizkit_versioning' => []]);
 
-        $this->assertSame([
+        self::assertSame([
             'parameter_prefix' => 'application',
             'strategy' => 'incrementing',
             'filename' => 'version',
@@ -40,8 +40,8 @@ final class ConfigurationTest extends TestCase
             'vcs' => true,
         ]]);
 
-        $this->assertArrayHasKey('vcs', $config);
-        $this->assertSame([
+        self::assertArrayHasKey('vcs', $config);
+        self::assertSame([
             'handler' => 'git',
             'commit_message' => null,
             'tag_message' => null,
@@ -57,8 +57,8 @@ final class ConfigurationTest extends TestCase
             'vcs' => false,
         ]]);
 
-        $this->assertArrayHasKey('vcs', $config);
-        $this->assertSame([
+        self::assertArrayHasKey('vcs', $config);
+        self::assertSame([
             'handler' => null,
             'commit_message' => null,
             'tag_message' => null,

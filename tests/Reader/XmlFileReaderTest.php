@@ -19,8 +19,8 @@ final class XmlFileReaderTest extends TestCase
 
         $version = $reader->read();
 
-        $this->assertSame('1.2.3', $version->getVersionNumber());
-        $this->assertSame('2020-05-22T11:58:13+02:00', $version->getReleaseDate()->format(\DateTimeInterface::RFC3339));
+        self::assertSame('1.2.3', $version->getVersionNumber());
+        self::assertSame('2020-05-22T11:58:13+02:00', $version->getReleaseDate()->format(\DateTimeInterface::RFC3339));
     }
 
     public function testExceptionIsThrownOnInvalidPrefix(): void

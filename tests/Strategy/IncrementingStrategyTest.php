@@ -46,8 +46,8 @@ final class IncrementingStrategyTest extends TestCase
 
         $newVersion = ($this->strategy)($this->io, $oldVersion);
 
-        $this->assertSame($incrementedVersion, $newVersion->getVersionNumber());
-        $this->assertNotSame(
+        self::assertSame($incrementedVersion, $newVersion->getVersionNumber());
+        self::assertNotSame(
             $oldVersion->getReleaseDate()->format(\DateTimeInterface::RFC3339),
             $newVersion->getReleaseDate()->format(\DateTimeInterface::RFC3339)
         );
@@ -60,7 +60,7 @@ final class IncrementingStrategyTest extends TestCase
     {
         $newVersion = ($this->strategy)($this->io);
 
-        $this->assertSame($initialValue, $newVersion->getVersionNumber());
+        self::assertSame($initialValue, $newVersion->getVersionNumber());
     }
 
     /**
@@ -73,18 +73,18 @@ final class IncrementingStrategyTest extends TestCase
         ($this->strategy)($this->io, new Version($invalidVersion));
     }
 
-    public function validVersionAndIncrementedVersionPairs(): iterable
+    public static function validVersionAndIncrementedVersionPairs(): iterable
     {
         yield ['1', '2'];
         yield ['10', '11'];
     }
 
-    public function initialValues(): iterable
+    public static function initialValues(): iterable
     {
         yield ['1'];
     }
 
-    public function invalidVersions(): iterable
+    public static function invalidVersions(): iterable
     {
         yield ['1.2.3'];
         yield ['-1'];

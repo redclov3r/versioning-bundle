@@ -36,7 +36,7 @@ final class GitHandlerTest extends TestCase
     {
         $version = new Version('1.2.3');
 
-        $this->io->expects($this->exactly(9))->method('text')->withConsecutive(
+        $this->io->expects(self::exactly(9))->method('text')->withConsecutive(
             [\sprintf('Staging the file "%s".', self::VERSION_FILE)],
             ['stage successful'],
             [\sprintf('Checking if the file "%s" has any changes to commit.', self::VERSION_FILE)],
@@ -48,7 +48,7 @@ final class GitHandlerTest extends TestCase
             ['tag created']
         );
 
-        $this->io->expects($this->once())->method('error')->withConsecutive(
+        $this->io->expects(self::once())->method('error')->withConsecutive(
             ['tag does not exist']
         );
 
@@ -60,7 +60,7 @@ final class GitHandlerTest extends TestCase
 
     public function testNameAndEmailAreNotUsedIfNull(): void
     {
-        $this->io->expects($this->exactly(6))->method('text')->withConsecutive(
+        $this->io->expects(self::exactly(6))->method('text')->withConsecutive(
             [\sprintf('Staging the file "%s".', self::VERSION_FILE)],
             ['stage successful'],
             [\sprintf('Checking if the file "%s" has any changes to commit.', self::VERSION_FILE)],
@@ -69,7 +69,7 @@ final class GitHandlerTest extends TestCase
             ['commit successful']
         );
 
-        $this->io->expects($this->never())->method('error');
+        $this->io->expects(self::never())->method('error');
 
         $handler = $this->createHandler(__DIR__.'/Fixtures/fake-git/default-settings.php', null, null);
 
@@ -78,7 +78,7 @@ final class GitHandlerTest extends TestCase
 
     public function testNameAndEmailAreUsedIfExist(): void
     {
-        $this->io->expects($this->exactly(6))->method('text')->withConsecutive(
+        $this->io->expects(self::exactly(6))->method('text')->withConsecutive(
             [\sprintf('Staging the file "%s".', self::VERSION_FILE)],
             ['stage successful'],
             [\sprintf('Checking if the file "%s" has any changes to commit.', self::VERSION_FILE)],
@@ -87,7 +87,7 @@ final class GitHandlerTest extends TestCase
             ['commit successful']
         );
 
-        $this->io->expects($this->never())->method('error');
+        $this->io->expects(self::never())->method('error');
 
         $handler = $this->createHandler(__DIR__.'/Fixtures/fake-git/custom-username-and-email.php', null, null, 'Some Name', 'test@email.com');
 
@@ -96,7 +96,7 @@ final class GitHandlerTest extends TestCase
 
     public function testCommitIsCreatedSuccessfully(): void
     {
-        $this->io->expects($this->exactly(6))->method('text')->withConsecutive(
+        $this->io->expects(self::exactly(6))->method('text')->withConsecutive(
             [\sprintf('Staging the file "%s".', self::VERSION_FILE)],
             ['stage successful'],
             [\sprintf('Checking if the file "%s" has any changes to commit.', self::VERSION_FILE)],
@@ -105,7 +105,7 @@ final class GitHandlerTest extends TestCase
             ['commit successful']
         );
 
-        $this->io->expects($this->never())->method('error');
+        $this->io->expects(self::never())->method('error');
 
         $handler = $this->createHandler(__DIR__.'/Fixtures/fake-git/commit-created-successfully.php');
         $handler->commit($this->io, new Version('1.2.3'));
@@ -113,11 +113,11 @@ final class GitHandlerTest extends TestCase
 
     public function testExceptionIsThrownIfStageFails(): void
     {
-        $this->io->expects($this->once())->method('text')->withConsecutive(
+        $this->io->expects(self::once())->method('text')->withConsecutive(
             [\sprintf('Staging the file "%s".', self::VERSION_FILE)]
         );
 
-        $this->io->expects($this->once())->method('error')->withConsecutive(
+        $this->io->expects(self::once())->method('error')->withConsecutive(
             ['stage failed']
         );
 
@@ -131,14 +131,14 @@ final class GitHandlerTest extends TestCase
 
     public function testExceptionIsThrownIfThereIsNothingToCommit(): void
     {
-        $this->io->expects($this->exactly(4))->method('text')->withConsecutive(
+        $this->io->expects(self::exactly(4))->method('text')->withConsecutive(
             [\sprintf('Staging the file "%s".', self::VERSION_FILE)],
             ['stage successful'],
             [\sprintf('Checking if the file "%s" has any changes to commit.', self::VERSION_FILE)],
             ['nothing to commit']
         );
 
-        $this->io->expects($this->never())->method('error');
+        $this->io->expects(self::never())->method('error');
 
         $handler = $this->createHandler(__DIR__.'/Fixtures/fake-git/nothing-to-commit.php');
 
@@ -150,7 +150,7 @@ final class GitHandlerTest extends TestCase
 
     public function testExceptionIsThrownIfCommitCreationFails(): void
     {
-        $this->io->expects($this->exactly(5))->method('text')->withConsecutive(
+        $this->io->expects(self::exactly(5))->method('text')->withConsecutive(
             [\sprintf('Staging the file "%s".', self::VERSION_FILE)],
             ['stage successful'],
             [\sprintf('Checking if the file "%s" has any changes to commit.', self::VERSION_FILE)],
@@ -158,7 +158,7 @@ final class GitHandlerTest extends TestCase
             [\sprintf('Committing the file "%s".', self::VERSION_FILE)]
         );
 
-        $this->io->expects($this->once())->method('error')->withConsecutive(
+        $this->io->expects(self::once())->method('error')->withConsecutive(
             ['commit creation failed']
         );
 
@@ -174,13 +174,13 @@ final class GitHandlerTest extends TestCase
     {
         $version = new Version('1.2.3');
 
-        $this->io->expects($this->exactly(3))->method('text')->withConsecutive(
+        $this->io->expects(self::exactly(3))->method('text')->withConsecutive(
             [\sprintf('Checking if the tag "v%s" already exists.', $version)],
             [\sprintf('Creating a new tag "v%s".', $version)],
             ['tag created']
         );
 
-        $this->io->expects($this->once())->method('error')->withConsecutive(
+        $this->io->expects(self::once())->method('error')->withConsecutive(
             ['tag does not exist']
         );
 
@@ -192,12 +192,12 @@ final class GitHandlerTest extends TestCase
     {
         $version = new Version('1.2.3');
 
-        $this->io->expects($this->exactly(2))->method('text')->withConsecutive(
+        $this->io->expects(self::exactly(2))->method('text')->withConsecutive(
             [\sprintf('Checking if the tag "v%s" already exists.', $version)],
             ['tag exists']
         );
 
-        $this->io->expects($this->never())->method('error');
+        $this->io->expects(self::never())->method('error');
 
         $handler = $this->createHandler(__DIR__.'/Fixtures/fake-git/tag-exists.php');
 
@@ -211,12 +211,12 @@ final class GitHandlerTest extends TestCase
     {
         $version = new Version('1.2.3');
 
-        $this->io->expects($this->exactly(2))->method('text')->withConsecutive(
+        $this->io->expects(self::exactly(2))->method('text')->withConsecutive(
             [\sprintf('Checking if the tag "v%s" already exists.', $version)],
             [\sprintf('Creating a new tag "v%s".', $version)]
         );
 
-        $this->io->expects($this->exactly(2))->method('error')->withConsecutive(
+        $this->io->expects(self::exactly(2))->method('error')->withConsecutive(
             ['tag does not exist'],
             ['tag creation failed']
         );

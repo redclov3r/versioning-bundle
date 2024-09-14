@@ -21,6 +21,7 @@ return (new PhpCsFixer\Config())
         'php_unit_test_case_static_method_calls' => ['call_type' => 'self'],
         'self_static_accessor' => true,
         'single_line_throw' => false,
+        'trailing_comma_in_multiline' => ['after_heredoc' => true, 'elements' => ['array_destructuring', 'arrays']],
         'whitespace_after_comma_in_array' => ['ensure_single_space' => true],
     ])
     ->setRiskyAllowed(true)

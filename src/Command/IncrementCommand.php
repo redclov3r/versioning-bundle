@@ -53,9 +53,6 @@ final class IncrementCommand extends Command
      */
     private $vcsHandler;
 
-    /**
-     * @var string
-     */
     private string $vcsTaggingMode;
 
     public function __construct(
@@ -71,7 +68,7 @@ final class IncrementCommand extends Command
         $this->writer = $writer;
         $this->strategy = $strategy;
         $this->vcsHandler = $vcsHandler;
-        $this->vcsTaggingMode = in_array($vcsTaggingMode, ['always', 'never', 'ask']) ? $vcsTaggingMode : 'ask';
+        $this->vcsTaggingMode = \in_array($vcsTaggingMode, ['always', 'never', 'ask']) ? $vcsTaggingMode : 'ask';
 
         parent::__construct();
     }
@@ -137,7 +134,7 @@ final class IncrementCommand extends Command
         $this->vcsHandler->commit($io, $version);
         $io->success('Your application version file has successfully been committed to your VCS.');
 
-        if('never' === $this->vcsTaggingMode) {
+        if ('never' === $this->vcsTaggingMode) {
             return;
         }
 

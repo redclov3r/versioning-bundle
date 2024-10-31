@@ -181,7 +181,6 @@ final class IncrementCommandTest extends TestCase
         self::assertStringNotContainsString('Your application has successfully been tagged with the version "2".', $display);
     }
 
-
     public function testFileIsCommittedAndTagIsAutocreatedIfVCSHandlerIsNotNullAndTaggingModeIsAlways(): void
     {
         $commandTester = $this->createCommandTester($this->validFile, __DIR__.'/Fixtures/fake-git/success.php', 'always');

@@ -53,18 +53,25 @@ final class IncrementCommand extends Command
      */
     private $vcsHandler;
 
+    /**
+     * @var string
+     */
+    private string $vcsTaggingMode;
+
     public function __construct(
         string $file,
         ReaderInterface $reader,
         WriterInterface $writer,
         StrategyInterface $strategy,
-        ?VCSHandlerInterface $vcsHandler = null
+        ?VCSHandlerInterface $vcsHandler = null,
+        string $vcsTaggingMode = 'ask'
     ) {
         $this->file = $file;
         $this->reader = $reader;
         $this->writer = $writer;
         $this->strategy = $strategy;
         $this->vcsHandler = $vcsHandler;
+        $this->vcsTaggingMode = in_array($vcsTaggingMode, ['always', 'never', 'ask']) ? $vcsTaggingMode : 'ask';
 
         parent::__construct();
     }
@@ -130,7 +137,11 @@ final class IncrementCommand extends Command
         $this->vcsHandler->commit($io, $version);
         $io->success('Your application version file has successfully been committed to your VCS.');
 
-        if ($io->confirm(\sprintf('Do you wish to create a tag with the version "%s"?', $version), true)) {
+        if('never' === $this->vcsTaggingMode) {
+            return;
+        }
+
+        if ('always' === $this->vcsTaggingMode || $io->confirm(\sprintf('Do you wish to create a tag with the version "%s"?', $version), true)) {
             $this->vcsHandler->tag($io, $version);
             $io->success(\sprintf('Your application has successfully been tagged with the version "%s".', $version));
         }

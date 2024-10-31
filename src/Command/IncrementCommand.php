@@ -53,7 +53,10 @@ final class IncrementCommand extends Command
      */
     private $vcsHandler;
 
-    private string $vcsTaggingMode;
+    /**
+     * @var string
+     */
+    private $vcsTaggingMode;
 
     public function __construct(
         string $file,

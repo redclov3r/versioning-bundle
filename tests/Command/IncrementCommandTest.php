@@ -46,6 +46,14 @@ final class IncrementCommandTest extends TestCase
         $this->invalidFile = null;
     }
 
+    public function testExceptionIsThrownForInvalidTaggingMode(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid VCS tagging mode "invalid". Expected one of: "always", "never", "ask".');
+
+        $this->createCommandTester($this->validFile, null, 'invalid');
+    }
+
     public function testVersionIsIncremented(): void
     {
         $commandTester = $this->createCommandTester($this->validFile);

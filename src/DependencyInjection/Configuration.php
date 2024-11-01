@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Bizkit\VersioningBundle\DependencyInjection;
 
+use Bizkit\VersioningBundle\Command\IncrementCommand;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -69,8 +70,8 @@ final class Configuration implements ConfigurationInterface
                             ->defaultNull()
                         ->end()
                         ->enumNode('tagging_mode')
-                            ->values(['always', 'never', 'ask'])
-                            ->info("The mode in which tags are applied to version commits.\n'always': always add a tag without prompting, 'never': never add a tag, 'ask': show a prompt when icrementing versions")
+                            ->values(IncrementCommand::TAGGING_MODES)
+                            ->info("The mode for applying tags to version commits:\n- 'always': automatically add a tag without prompting\n- 'never': do not add a tag\n- 'ask': prompt before tagging when incrementing versions")
                             ->cannotBeEmpty()
                             ->defaultValue('ask')
                         ->end()

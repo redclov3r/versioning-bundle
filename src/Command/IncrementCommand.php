@@ -28,6 +28,8 @@ final class IncrementCommand extends Command
     protected static $defaultName = self::DEFAULT_NAME;
     protected static $defaultDescription = self::DEFAULT_DESCRIPTION;
 
+    public const TAGGING_MODES = ['always', 'never', 'ask'];
+
     /**
      * @var string
      */
@@ -66,12 +68,18 @@ final class IncrementCommand extends Command
         ?VCSHandlerInterface $vcsHandler = null,
         string $vcsTaggingMode = 'ask'
     ) {
+        if (!\in_array($vcsTaggingMode, self::TAGGING_MODES, true)) {
+            throw new \InvalidArgumentException(
+                \sprintf('Invalid VCS tagging mode "%s". Expected one of: "%s".', $vcsTaggingMode, implode('", "', self::TAGGING_MODES))
+            );
+        }
+
         $this->file = $file;
         $this->reader = $reader;
         $this->writer = $writer;
         $this->strategy = $strategy;
         $this->vcsHandler = $vcsHandler;
-        $this->vcsTaggingMode = \in_array($vcsTaggingMode, ['always', 'never', 'ask']) ? $vcsTaggingMode : 'ask';
+        $this->vcsTaggingMode = $vcsTaggingMode;
 
         parent::__construct();
     }
@@ -141,7 +149,10 @@ final class IncrementCommand extends Command
             return;
         }
 
-        if ('always' === $this->vcsTaggingMode || $io->confirm(\sprintf('Do you wish to create a tag with the version "%s"?', $version), true)) {
+        if (
+            'always' === $this->vcsTaggingMode
+            || $io->confirm(\sprintf('Do you wish to create a tag with the version "%s"?', $version), true)
+        ) {
             $this->vcsHandler->tag($io, $version);
             $io->success(\sprintf('Your application has successfully been tagged with the version "%s".', $version));
         }
